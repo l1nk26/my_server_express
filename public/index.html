@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mi servidor</title>
+    <link rel="stylesheet" href="index.css">
+    
+</head>
+<body>
+
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" placeholder="upload file" id="myFile">
+        <input type="submit" value="Subir archivo">
+    </form>
+
+    <script>
+
+        const file = document.getElementById("myFile").files[0];
+        const form = new FormData();
+        form.append('file', file);
+
+        fetch("/upload", {
+            method: 'POST',
+            body: form
+        }).on('progress', (event) => {
+            if (event.lengthComputable) {
+                let progress = event.loaded / event.total * 100;
+                console.log(progress);
+            }
+        });
+    </script>
+    
+</body>
+</html>
